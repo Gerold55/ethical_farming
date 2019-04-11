@@ -1,14 +1,16 @@
 --[[
-	Farming Redo Mod
-	by TenPlus1
+	Ethical Farming Mod
+	by Gerold55
+	
+	Original mod by TenPlus1
 	NEW growing routine by prestidigitator
 	auto-refill by crabman77
 ]]
 
-ethical_farming = {
-	mod = "redo",
+farming = {
+	mod = "ethical",
 	version = "20190111",
-	path = minetest.get_modpath("ethical_farming"),
+	path = minetest.get_modpath("farming"),
 	select = {
 		type = "fixed",
 		fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5}
@@ -19,16 +21,16 @@ ethical_farming = {
 
 local creative_mode_cache = minetest.settings:get_bool("creative_mode")
 
-function ethical_farming.is_creative(name)
+function farming.is_creative(name)
 	return creative_mode_cache or minetest.check_player_privs(name, {creative = true})
 end
 
 
-local statistics = dofile(ethical_farming.path .. "/statistics.lua")
+local statistics = dofile(farming.path .. "/statistics.lua")
 
 -- Intllib
-local S = dofile(ethical_farming.path .. "/intllib.lua")
-ethical_farming.intllib = S
+local S = dofile(farming.path .. "/intllib.lua")
+farming.intllib = S
 
 
 -- Utility Function
@@ -124,7 +126,7 @@ end
 
 local plant_stages = {}
 
-ethical_farming.plant_stages = plant_stages
+farming.plant_stages = plant_stages
 
 --- Registers the stages of growth of a (possible plant) node.
  --
@@ -177,7 +179,7 @@ local function reg_plant_stages(plant_name, stage, force_last)
 							old_constr(pos)
 						end
 
-						ethical_farming.handle_growth(pos)
+						farming.handle_growth(pos)
 					end,
 
 					on_destruct = function(pos)
@@ -190,7 +192,7 @@ local function reg_plant_stages(plant_name, stage, force_last)
 					end,
 
 					on_timer = function(pos, elapsed)
-						return ethical_farming.plant_growth_timer(pos, elapsed, node_name)
+						return farming.plant_growth_timer(pos, elapsed, node_name)
 					end,
 				})
 		end
@@ -253,7 +255,7 @@ end
 
 
 -- detects a crop at given position, starting or stopping growth timer when needed
-function ethical_farming.handle_growth(pos, node)
+function farming.handle_growth(pos, node)
 
 	if not pos then
 		return
@@ -278,14 +280,14 @@ end)
 -- Just in case a growing type or added node is missed (also catches existing
 -- nodes added to map before timers were incorporated).
 minetest.register_lbm({
-	name = "ethical_farming:growing_lbm",
+	name = "farming:growing_lbm",
 	nodenames = { "group:growing" },
 	run_at_every_load = true,
 	action = function(pos, node)
 		minetest.after(math.random(1, 300), function(pos)
 			local node1 = minetest.get_node_or_nil(pos)
 			if node1 ~= nil then
-				ethical_farming.handle_growth(pos, node1)
+				farming.handle_growth(pos, node1)
 			end
 		end, pos)
 	end
@@ -293,7 +295,7 @@ minetest.register_lbm({
 
 
 -- Plant timer function that grows plants under the right conditions.
-function ethical_farming.plant_growth_timer(pos, elapsed, node_name)
+function farming.plant_growth_timer(pos, elapsed, node_name)
 
 	local stages = plant_stages[node_name]
 
@@ -387,7 +389,7 @@ end
 
 
 -- refill placed plant by crabman (26/08/2015) updated by TenPlus1
-function ethical_farming.refill_plant(player, plantname, index)
+function farming.refill_plant(player, plantname, index)
 
 	local inv = player:get_inventory()
 	local old_stack = inv:get_stack("main", index)
@@ -411,7 +413,7 @@ end
 
 
 -- Place Seeds on Soil
-function ethical_farming.place_seed(itemstack, placer, pointed_thing, plantname)
+function farming.place_seed(itemstack, placer, pointed_thing, plantname)
 
 	local pt = pointed_thing
 
@@ -465,7 +467,7 @@ function ethical_farming.place_seed(itemstack, placer, pointed_thing, plantname)
 
 		minetest.sound_play("default_place_node", {pos = pt.above, gain = 1.0})
 
-		if placer and not ethical_farming.is_creative(placer:get_player_name()) then
+		if placer and not farming.is_creative(placer:get_player_name()) then
 
 			local name = itemstack:get_name()
 
@@ -475,7 +477,7 @@ function ethical_farming.place_seed(itemstack, placer, pointed_thing, plantname)
 			if itemstack:get_count() == 0 then
 
 				minetest.after(0.10,
-					ethical_farming.refill_plant,
+					farming.refill_plant,
 					placer,
 					name,
 					placer:get_wield_index()
@@ -486,7 +488,7 @@ function ethical_farming.place_seed(itemstack, placer, pointed_thing, plantname)
 		minetest.after(math.random(10, 300), function(pos)
 			local node = minetest.get_node_or_nil(pos)
 			if node ~= nil then
-				ethical_farming.handle_growth(pos, node)
+				farming.handle_growth(pos, node)
 			end
 		end, pt.above)
 
@@ -495,8 +497,8 @@ function ethical_farming.place_seed(itemstack, placer, pointed_thing, plantname)
 end
 
 
--- Function to register plants (default ethical_farming compatibility)
-ethical_farming.register_plant = function(name, def)
+-- Function to register plants (default farming compatibility)
+farming.register_plant = function(name, def)
 
 	if not def.steps then
 		return nil
@@ -524,12 +526,12 @@ ethical_farming.register_plant = function(name, def)
 		paramtype2 = "wallmounted",
 		walkable = false,
 		sunlight_propagates = true,
-		selection_box = ethical_farming.select,
+		selection_box = farming.select,
 		place_param2 = def.place_param2 or nil,
 		next_plant = mname .. ":" .. pname .. "_1",
 
 		on_place = function(itemstack, placer, pointed_thing)
-			return ethical_farming.place_seed(itemstack, placer,
+			return farming.place_seed(itemstack, placer,
 				pointed_thing, mname .. ":" .. pname .. "_1")
 		end,
 	})
@@ -586,7 +588,7 @@ ethical_farming.register_plant = function(name, def)
 			buildable_to = true,
 			sunlight_propagates = true,
 			drop = drop,
-			selection_box = ethical_farming.select,
+			selection_box = farming.select,
 			groups = g,
 			sounds = default.node_sound_leaves_defaults(),
 			minlight = def.minlight,
@@ -596,52 +598,57 @@ ethical_farming.register_plant = function(name, def)
 	end
 
 -- add to farming.registered_plants
-ethical_farming.registered_plants[mname .. ":" .. pname] = {
+farming.registered_plants[mname .. ":" .. pname] = {
 	crop = mname .. ":" .. pname,
 	seed = mname .. ":seed_" .. pname,
 	steps = def.steps,
 	minlight = def.minlight,
 	maxlight = def.maxlight
 }
---print(dump(ethical_farming.registered_plants[mname .. ":" .. pname]))
+--print(dump(farming.registered_plants[mname .. ":" .. pname]))
 	-- Return info
 	return {seed = mname .. ":seed_" .. pname, harvest = mname .. ":" .. pname}
 end
 
 
 -- default settings
-ethical_farming.carrot = true
-ethical_farming.potato = true
-ethical_farming.tomato = true
-ethical_farming.cucumber = true
-ethical_farming.corn = true
-ethical_farming.coffee = true
-ethical_farming.melon = true
-ethical_farming.pumpkin = true
-ethical_farming.cocoa = true
-ethical_farming.raspberry = true
-ethical_farming.blueberry = true
-ethical_farming.rhubarb = true
-ethical_farming.beans = true
-ethical_farming.grapes = true
-ethical_farming.barley = true
-ethical_farming.chili = true
-ethical_farming.hemp = true
-ethical_farming.garlic = true
-ethical_farming.onion = true
-ethical_farming.pepper = true
-ethical_farming.pineapple = true
-ethical_farming.peas = true
-ethical_farming.beetroot = true
-ethical_farming.grains = true
-ethical_farming.diamond = true
-ethical_farming.rarety = 0.002 -- 0.006
+farming.carrot = true
+farming.potato = true
+farming.tomato = true
+farming.cucumber = true
+farming.corn = true
+farming.coffee = true
+farming.melon = true
+farming.pumpkin = true
+farming.cocoa = true
+farming.raspberry = true
+farming.blueberry = true
+farming.rhubarb = true
+farming.beans = true
+farming.grapes = true
+farming.barley = true
+farming.chili = true
+farming.hemp = true
+farming.garlic = true
+farming.onion = true
+farming.pepper = true
+farming.pineapple = true
+farming.peas = true
+farming.beetroot = true
+farming.grains = true
+farming.diamond = true
+farming.bronze = true
+farming.coal = true
+farming.cactus = true
+farming.mese = true
+farming.gold = true
+farming.rarety = 0.002 -- 0.006
 
 
 -- Load new global settings if found inside mod folder
-local input = io.open(ethical_farming.path.."/ethical_farming.conf", "r")
+local input = io.open(farming.path.."/farming.conf", "r")
 if input then
-	dofile(ethical_farming.path .. "/farming.conf")
+	dofile(farming.path .. "/farming.conf")
 	input:close()
 end
 
@@ -655,52 +662,57 @@ end
 
 
 -- important items
-dofile(ethical_farming.path.."/soil.lua")
-dofile(ethical_farming.path.."/hoes.lua")
-dofile(ethical_farming.path.."/grass.lua")
-dofile(ethical_farming.path.."/utensils.lua")
+dofile(farming.path.."/soil.lua")
+dofile(farming.path.."/hoes.lua")
+dofile(farming.path.."/grass.lua")
+dofile(farming.path.."/utensils.lua")
 
 -- default crops
-dofile(ethical_farming.path.."/crops/wheat.lua")
-dofile(ethical_farming.path.."/crops/cotton.lua")
+dofile(farming.path.."/crops/wheat.lua")
+dofile(farming.path.."/crops/cotton.lua")
 
 
 -- helper function
 local function ddoo(file, check)
 
 	if check then
-		dofile(ethical_farming.path .. "/crops/" .. file)
+		dofile(farming.path .. "/crops/" .. file)
 	end
 end
 
 -- add additional crops and food (if enabled)
-ddoo("carrot.lua", ethical_farming.carrot)
-ddoo("potato.lua", ethical_farming.potato)
-ddoo("tomato.lua", ethical_farming.tomato)
-ddoo("cucumber.lua", ethical_farming.cucumber)
-ddoo("corn.lua", ethical_farming.corn)
-ddoo("coffee.lua", ethical_farming.coffee)
-ddoo("melon.lua", ethical_farming.melon)
-ddoo("pumpkin.lua", ethical_farming.pumpkin)
-ddoo("cocoa.lua", ethical_farming.cocoa)
-ddoo("raspberry.lua", ethical_farming.raspberry)
-ddoo("blueberry.lua", ethical_farming.blueberry)
-ddoo("rhubarb.lua", ethical_farming.rhubarb)
-ddoo("beans.lua", ethical_farming.beans)
-ddoo("grapes.lua", ethical_farming.grapes)
-ddoo("barley.lua", ethical_farming.barley)
-ddoo("hemp.lua", ethical_farming.hemp)
-ddoo("garlic.lua", ethical_farming.garlic)
-ddoo("onion.lua", ethical_farming.onion)
-ddoo("pepper.lua", ethical_farming.pepper)
-ddoo("pineapple.lua", ethical_farming.pineapple)
-ddoo("peas.lua", ethical_farming.peas)
-ddoo("beetroot.lua", ethical_farming.beetroot)
-ddoo("chili.lua", ethical_farming.chili)
-ddoo("ryeoatrice.lua", ethical_farming.grains)
-ddoo("diamond.lua", ethical_farming.diamond)
+ddoo("carrot.lua", farming.carrot)
+ddoo("potato.lua", farming.potato)
+ddoo("tomato.lua", farming.tomato)
+ddoo("cucumber.lua", farming.cucumber)
+ddoo("corn.lua", farming.corn)
+ddoo("coffee.lua", farming.coffee)
+ddoo("melon.lua", farming.melon)
+ddoo("pumpkin.lua", farming.pumpkin)
+ddoo("cocoa.lua", farming.cocoa)
+ddoo("raspberry.lua", farming.raspberry)
+ddoo("blueberry.lua", farming.blueberry)
+ddoo("rhubarb.lua", farming.rhubarb)
+ddoo("beans.lua", farming.beans)
+ddoo("grapes.lua", farming.grapes)
+ddoo("barley.lua", farming.barley)
+ddoo("hemp.lua", farming.hemp)
+ddoo("garlic.lua", farming.garlic)
+ddoo("onion.lua", farming.onion)
+ddoo("pepper.lua", farming.pepper)
+ddoo("pineapple.lua", farming.pineapple)
+ddoo("peas.lua", farming.peas)
+ddoo("beetroot.lua", farming.beetroot)
+ddoo("chili.lua", farming.chili)
+ddoo("ryeoatrice.lua", farming.grains)
+ddoo("diamond.lua", farming.diamond)
+ddoo("bronze.lua", farming.bronze)
+ddoo("coal.lua", farming.coal)
+ddoo("cactus.lua", farming.cactus)
+ddoo("mese.lua", farming.mese)
+ddoo("gold.lua", farming.gold)
 
-dofile(ethical_farming.path.."/food.lua")
-dofile(ethical_farming.path.."/mapgen.lua")
-dofile(ethical_farming.path.."/compatibility.lua") -- ethical_farming Plus compatibility
-dofile(ethical_farming.path.."/lucky_block.lua")
+dofile(farming.path.."/food.lua")
+dofile(farming.path.."/mapgen.lua")
+dofile(farming.path.."/compatibility.lua") -- Farming Plus compatibility
+dofile(farming.path.."/lucky_block.lua")
