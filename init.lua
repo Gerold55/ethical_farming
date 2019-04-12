@@ -642,6 +642,9 @@ farming.coal = true
 farming.cactus = true
 farming.mese = true
 farming.gold = true
+farming.obsidian = true
+farming.sand = true
+farming.desert_sand = true
 farming.rarety = 0.002 -- 0.006
 
 
@@ -670,6 +673,7 @@ dofile(farming.path.."/utensils.lua")
 -- default crops
 dofile(farming.path.."/crops/wheat.lua")
 dofile(farming.path.."/crops/cotton.lua")
+dofile(farming.path.."/ore.lua")
 
 
 -- helper function
@@ -711,6 +715,9 @@ ddoo("coal.lua", farming.coal)
 ddoo("cactus.lua", farming.cactus)
 ddoo("mese.lua", farming.mese)
 ddoo("gold.lua", farming.gold)
+ddoo("obsidian.lua", farming.obsidian)
+ddoo("sand.lua", farming.obsidian)
+ddoo("desert_sand.lua", farming.desert_sand)
 
 dofile(farming.path.."/food.lua")
 dofile(farming.path.."/mapgen.lua")
