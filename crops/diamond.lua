@@ -18,23 +18,15 @@ minetest.register_craftitem("farming:seed_diamond", {
 })
 
 minetest.register_craftitem("farming:diamond_essence", {
-	description = S("Diamond Essence"),
+	description = S("diamond Essence"),
 	inventory_image = "ef_diamond_essence.png",
 	groups = {food_corn = 1, flammable = 2},
-})
-
--- corn on the cob (texture by TenPlus1)
-minetest.register_craftitem("farming:corn_cob", {
-	description = S("Corn on the Cob"),
-	inventory_image = "farming_corn_cob.png",
-	groups = {food_corn_cooked = 1, flammable = 2},
-	on_use = minetest.item_eat(5),
 })
 
 -- corn definition
 local crop_def = {
 	drawtype = "plantlike",
-	tiles = {"ef_diamond_1.png"},
+	tiles = {"ef_diamond.png"},
 	paramtype = "light",
 	sunlight_propagates = true,
 	walkable = false,
@@ -49,33 +41,34 @@ local crop_def = {
 }
 
 -- stage 1
-crop_def.tiles = {"ef_diamond.png"}
 minetest.register_node("farming:diamond_1", table.copy(crop_def))
 
-crop_def.tiles = {"ef_diamond_1.png"}
+--stage 2
+
+crop_def.tiles = {"ef_diamond_2.png"}
 minetest.register_node("farming:diamond_2", table.copy(crop_def))
 
--- stage 2
+-- stage 3
 crop_def.tiles = {"ef_diamond_3.png"}
 crop_def.drop = {
 	items = {
-		{items = {'farming:diamond'}, rarity = 1},
-		{items = {'farming:diamond'}, rarity = 2},
-		{items = {'farming:diamond'}, rarity = 3},
+		{items = {'farming:diamond_essence'}, rarity = 1},
+		{items = {'farming:diamond_essence'}, rarity = 2},
+		{items = {'farming:diamond_essence'}, rarity = 3},
 		{items = {'farming:seed_diamond'}, rarity = 1},
 		{items = {'farming:seed_diamond'}, rarity = 3},
 	}
 }
 minetest.register_node("farming:diamond_3", table.copy(crop_def))
 
--- stage 3
+-- stage 4 (final)
 crop_def.tiles = {"ef_diamond_3.png"}
 crop_def.groups.growing = 0
 crop_def.drop = {
 	items = {
-		{items = {'farming:diamond 2'}, rarity = 1},
-		{items = {'farming:diamond 2'}, rarity = 2},
-		{items = {'farming:diamond 2'}, rarity = 2},
+		{items = {'farming:diamond_essence 2'}, rarity = 1},
+		{items = {'farming:diamond_essence 2'}, rarity = 2},
+		{items = {'farming:diamond_essence 2'}, rarity = 2},
 		{items = {'farming:seed_diamond'}, rarity = 1},
 		{items = {'farming:seed_diamond'}, rarity = 3},
 	}
@@ -84,8 +77,8 @@ minetest.register_node("farming:diamond_4", table.copy(crop_def))
 
 -- add to registered_plants
 farming.registered_plants["farming:diamond"] = {
-	crop = "farming:diamond",
-	seed = "farming:diamond_seeds",
+	crop = "farming:diamonds",
+	seed = "farming:diamonds_seeds",
 	minlight = 13,
 	maxlight = 15,
 	steps = 8

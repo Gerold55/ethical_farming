@@ -623,6 +623,7 @@ farming.pumpkin = true
 farming.cocoa = true
 farming.raspberry = true
 farming.blueberry = true
+farming.blackberry = true
 farming.rhubarb = true
 farming.beans = true
 farming.grapes = true
@@ -644,7 +645,10 @@ farming.mese = true
 farming.gold = true
 farming.obsidian = true
 farming.sand = true
-farming.desert_sand = true
+farming.desertsand = true
+farming.essence = true
+farming.copper = true
+farming.dyes = true
 farming.rarety = 0.002 -- 0.006
 
 
@@ -696,6 +700,7 @@ ddoo("pumpkin.lua", farming.pumpkin)
 ddoo("cocoa.lua", farming.cocoa)
 ddoo("raspberry.lua", farming.raspberry)
 ddoo("blueberry.lua", farming.blueberry)
+ddoo("blackberry.lua", farming.blackberry)
 ddoo("rhubarb.lua", farming.rhubarb)
 ddoo("beans.lua", farming.beans)
 ddoo("grapes.lua", farming.grapes)
@@ -716,8 +721,11 @@ ddoo("cactus.lua", farming.cactus)
 ddoo("mese.lua", farming.mese)
 ddoo("gold.lua", farming.gold)
 ddoo("obsidian.lua", farming.obsidian)
-ddoo("sand.lua", farming.obsidian)
-ddoo("desert_sand.lua", farming.desert_sand)
+ddoo("sand.lua", farming.sand)
+ddoo("desertsand.lua", farming.desertsand)
+ddoo("essence.lua", farming.essence)
+ddoo("copper.lua", farming.copper)
+ddoo("dyes.lua", farming.dyes)
 
 dofile(farming.path.."/food.lua")
 dofile(farming.path.."/mapgen.lua")

@@ -59,9 +59,9 @@ minetest.register_node("farming:gold_2", table.copy(crop_def))
 crop_def.tiles = {"ef_gold_3.png"}
 crop_def.drop = {
 	items = {
-		{items = {'farming:gold'}, rarity = 1},
-		{items = {'farming:gold'}, rarity = 2},
-		{items = {'farming:gold'}, rarity = 3},
+		{items = {'farming:gold_essence'}, rarity = 1},
+		{items = {'farming:gold_essence'}, rarity = 2},
+		{items = {'farming:gold_essence'}, rarity = 3},
 		{items = {'farming:seed_gold'}, rarity = 1},
 		{items = {'farming:seed_gold'}, rarity = 3},
 	}
@@ -73,9 +73,9 @@ crop_def.tiles = {"ef_gold_3.png"}
 crop_def.groups.growing = 0
 crop_def.drop = {
 	items = {
-		{items = {'farming:gold 2'}, rarity = 1},
-		{items = {'farming:gold 2'}, rarity = 2},
-		{items = {'farming:gold 2'}, rarity = 2},
+		{items = {'farming:gold_essence 2'}, rarity = 1},
+		{items = {'farming:gold_essence 2'}, rarity = 2},
+		{items = {'farming:gold_essence 2'}, rarity = 2},
 		{items = {'farming:seed_gold'}, rarity = 1},
 		{items = {'farming:seed_gold'}, rarity = 3},
 	}

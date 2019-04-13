@@ -59,9 +59,9 @@ minetest.register_node("farming:obsidian_2", table.copy(crop_def))
 crop_def.tiles = {"ef_obsidian_3.png"}
 crop_def.drop = {
 	items = {
-		{items = {'farming:obsidian'}, rarity = 1},
-		{items = {'farming:obsidian'}, rarity = 2},
-		{items = {'farming:obsidian'}, rarity = 3},
+		{items = {'farming:obsidian_essence'}, rarity = 1},
+		{items = {'farming:obsidian_essence'}, rarity = 2},
+		{items = {'farming:obsidian_essence'}, rarity = 3},
 		{items = {'farming:seed_obsidian'}, rarity = 1},
 		{items = {'farming:seed_obsidian'}, rarity = 3},
 	}
@@ -73,9 +73,9 @@ crop_def.tiles = {"ef_obsidian_3.png"}
 crop_def.groups.growing = 0
 crop_def.drop = {
 	items = {
-		{items = {'farming:obsidian 2'}, rarity = 1},
-		{items = {'farming:obsidian 2'}, rarity = 2},
-		{items = {'farming:obsidian 2'}, rarity = 2},
+		{items = {'farming:obsidian_essence 2'}, rarity = 1},
+		{items = {'farming:obsidian_essence 2'}, rarity = 2},
+		{items = {'farming:obsidian_essence 2'}, rarity = 2},
 		{items = {'farming:seed_obsidian'}, rarity = 1},
 		{items = {'farming:seed_obsidian'}, rarity = 3},
 	}

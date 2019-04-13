@@ -59,9 +59,9 @@ minetest.register_node("farming:cactus_2", table.copy(crop_def))
 crop_def.tiles = {"ef_cactus_3.png"}
 crop_def.drop = {
 	items = {
-		{items = {'farming:cactus'}, rarity = 1},
-		{items = {'farming:cactus'}, rarity = 2},
-		{items = {'farming:cactus'}, rarity = 3},
+		{items = {'farming:cactus_essence'}, rarity = 1},
+		{items = {'farming:cactus_essence'}, rarity = 2},
+		{items = {'farming:cactus_essence'}, rarity = 3},
 		{items = {'farming:seed_cactus'}, rarity = 1},
 		{items = {'farming:seed_cactus'}, rarity = 3},
 	}
@@ -73,9 +73,9 @@ crop_def.tiles = {"ef_cactus_3.png"}
 crop_def.groups.growing = 0
 crop_def.drop = {
 	items = {
-		{items = {'farming:cactus 2'}, rarity = 1},
-		{items = {'farming:cactus 2'}, rarity = 2},
-		{items = {'farming:cactus 2'}, rarity = 2},
+		{items = {'farming:cactus_essence 2'}, rarity = 1},
+		{items = {'farming:cactus_essence 2'}, rarity = 2},
+		{items = {'farming:cactus_essence 2'}, rarity = 2},
 		{items = {'farming:seed_cactus'}, rarity = 1},
 		{items = {'farming:seed_cactus'}, rarity = 3},
 	}

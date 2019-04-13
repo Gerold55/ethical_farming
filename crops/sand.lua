@@ -8,7 +8,7 @@ local S = farming.intllib
 
 -- corn
 minetest.register_craftitem("farming:seed_sand", {
-	description = S("Sand Seeds"),
+	description = S("sand Seeds"),
 	inventory_image = "ef_sand_seeds.png",
 	groups = {food_corn = 1, flammable = 2},
 	on_place = function(itemstack, placer, pointed_thing)
@@ -18,23 +18,15 @@ minetest.register_craftitem("farming:seed_sand", {
 })
 
 minetest.register_craftitem("farming:sand_essence", {
-	description = S("Sand Essence"),
+	description = S("sand Essence"),
 	inventory_image = "ef_sand_essence.png",
 	groups = {food_corn = 1, flammable = 2},
-})
-
--- corn on the cob (texture by TenPlus1)
-minetest.register_craftitem("farming:corn_cob", {
-	description = S("Corn on the Cob"),
-	inventory_image = "farming_corn_cob.png",
-	groups = {food_corn_cooked = 1, flammable = 2},
-	on_use = minetest.item_eat(5),
 })
 
 -- corn definition
 local crop_def = {
 	drawtype = "plantlike",
-	tiles = {"ef_sand_1.png"},
+	tiles = {"ef_sand.png"},
 	paramtype = "light",
 	sunlight_propagates = true,
 	walkable = false,
@@ -49,33 +41,34 @@ local crop_def = {
 }
 
 -- stage 1
-crop_def.tiles = {"ef_sand.png"}
 minetest.register_node("farming:sand_1", table.copy(crop_def))
 
-crop_def.tiles = {"ef_sand_1.png"}
+--stage 2
+
+crop_def.tiles = {"ef_sand_2.png"}
 minetest.register_node("farming:sand_2", table.copy(crop_def))
 
--- stage 2
+-- stage 3
 crop_def.tiles = {"ef_sand_3.png"}
 crop_def.drop = {
 	items = {
-		{items = {'farming:sand'}, rarity = 1},
-		{items = {'farming:sand'}, rarity = 2},
-		{items = {'farming:sand'}, rarity = 3},
+		{items = {'farming:sand_essence'}, rarity = 1},
+		{items = {'farming:sand_essence'}, rarity = 2},
+		{items = {'farming:sand_essence'}, rarity = 3},
 		{items = {'farming:seed_sand'}, rarity = 1},
 		{items = {'farming:seed_sand'}, rarity = 3},
 	}
 }
 minetest.register_node("farming:sand_3", table.copy(crop_def))
 
--- stage 3
+-- stage 4 (final)
 crop_def.tiles = {"ef_sand_3.png"}
 crop_def.groups.growing = 0
 crop_def.drop = {
 	items = {
-		{items = {'farming:sand 2'}, rarity = 1},
-		{items = {'farming:sand 2'}, rarity = 2},
-		{items = {'farming:sand 2'}, rarity = 2},
+		{items = {'farming:sand_essence 2'}, rarity = 1},
+		{items = {'farming:sand_essence 2'}, rarity = 2},
+		{items = {'farming:sand_essence 2'}, rarity = 2},
 		{items = {'farming:seed_sand'}, rarity = 1},
 		{items = {'farming:seed_sand'}, rarity = 3},
 	}

@@ -8,7 +8,7 @@ minetest.register_node("farming:stone_with_essence", {
 
 minetest.register_craftitem("farming:essence", {
 	description = "Essence",
-	inventory_image = "ef_essence.png",
+	inventory_image = "ef_essence_item.png",
 })
 
 
