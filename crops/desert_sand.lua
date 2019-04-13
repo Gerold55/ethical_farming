@@ -68,6 +68,21 @@ crop_def.drop = {
 }
 minetest.register_node("farming:desert_sand_3", table.copy(crop_def))
 
+-- stage 3
+
+-- stage 3
+crop_def.tiles = {"ef_desert_sand_2.png"}
+crop_def.groups.growing = 0
+crop_def.drop = {
+	items = {
+		{items = {'farming:desert_sand 2'}, rarity = 1},
+		{items = {'farming:desert_sand 2'}, rarity = 2},
+		{items = {'farming:desert_sand 2'}, rarity = 2},
+		{items = {'farming:seed_desert_sand'}, rarity = 1},
+		{items = {'farming:seed_desert_sand'}, rarity = 3},
+	}
+}
+minetest.register_node("farming:desert_sand_4", table.copy(crop_def))
 
 -- add to registered_plants
 farming.registered_plants["farming:desert_sand"] = {
